@@ -12,28 +12,38 @@ const AllMeals = (props) => {
             foodName: "loading",
             calories: "loading"
         }]
-
     })
     const [isAddMeal, setIsAddMeal] = useState(false)
+
+    const [mealData, setMealData] = useState({
+        mealName: "Breakfast",
+        foodName: "",
+        calories: "",
+        comments: "test"
+    })
     //API Call 
     useEffect(() => {
         Axios.get(`http://magfooddiary-env.eba-bh6g2nuu.us-east-2.elasticbeanstalk.com/summary/${daily.user}/${daily.stamp}/`)
-        //.then(result => setDaily({ ...daily, data: result.data.meal }))
         .then(result => setDaily({ ...daily, data: result.data.meal}))
         .catch(err => console.log(err))
     }, [daily.data])
+
+    const handleMealName = (e) => {
+        setMealData({ ...mealData, mealName: e.target.value })
+    }
+    const handleFoodName = (e) => {
+        setMealData({ ...mealData, foodName: e.target.value })
+    }
+    const handleCalories = (e) => {
+        setMealData({ ...mealData, calories: e.target.value })
+    }
 
     const submitAddMeal = (e) => {
         e.preventDefault();
         Axios.patch(`http://magfooddiary-env.eba-bh6g2nuu.us-east-2.elasticbeanstalk.com/add/${daily.user}/${daily.stamp}/`,
         {
             meal: [
-                { 
-                mealName: "Breakfast",
-                foodName: "chicken22",
-                calories: "3333",
-                comments: "testpost"
-            }
+                mealData
         ]
         })
         .then(setIsAddMeal(false ))
@@ -46,10 +56,10 @@ const AllMeals = (props) => {
                 {(!isAddMeal) 
                 ? null 
                 :<div>
-                    <Typography>Meal Name:</Typography>
-                    <input />
+                    <Typography>Food Name:</Typography>
+                    <input onChange={handleFoodName}/>
                     <Typography>Calories</Typography>
-                    <input />
+                    <input onChange={handleCalories}/>
                     <Button onClick={(e) => submitAddMeal(e)}>Submit</Button>
                 </div>}
             {daily.data.map(result => (
