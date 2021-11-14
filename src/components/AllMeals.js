@@ -28,8 +28,8 @@ const AllMeals = (props) => {
         .catch(err => console.log(err))
     }, [daily.data])
 
-    const handleMealName = (e) => {
-        setMealData({ ...mealData, mealName: e.target.value })
+    const handleMealName = (meal) => {
+        setMealData({ ...mealData, mealName: meal })
     }
     const handleFoodName = (e) => {
         setMealData({ ...mealData, foodName: e.target.value })
@@ -42,11 +42,9 @@ const AllMeals = (props) => {
         e.preventDefault();
         Axios.patch(`http://magfooddiary-env.eba-bh6g2nuu.us-east-2.elasticbeanstalk.com/add/${daily.user}/${daily.stamp}/`,
         {
-            meal: [
-                mealData
-        ]
+            meal: [mealData]
         })
-        .then(setIsAddMeal(false ))
+        .then(setIsAddMeal(false))
         .catch(err => console.log(err))
     }
 
@@ -56,6 +54,15 @@ const AllMeals = (props) => {
                 {(!isAddMeal) 
                 ? null 
                 :<div>
+                    <Button 
+                        onClick={() => handleMealName("Breakfast")} 
+                        style={(mealData.mealName == "Breakfast") ? { backgroundColor: "yellow" } : { backgroundColor: "white" }}>Breakfast</Button>
+                    <Button onClick={() => handleMealName("Lunch")}
+                        style={(mealData.mealName == "Lunch") ? { backgroundColor: "yellow" } : { backgroundColor: "white" }}>Lunch</Button>
+                    <Button onClick={() => handleMealName("Dinner")}
+                        style={(mealData.mealName == "Dinner") ? { backgroundColor: "yellow" } : { backgroundColor: "white" }}>Dinner</Button>
+                    <Button onClick={() => handleMealName("Snack")}
+                        style={(mealData.mealName == "Snack") ? { backgroundColor: "yellow" } : { backgroundColor: "white" }}>Snack</Button>
                     <Typography>Food Name:</Typography>
                     <input onChange={handleFoodName}/>
                     <Typography>Calories</Typography>
