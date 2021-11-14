@@ -14,17 +14,14 @@ const AllMeals = (props) => {
         }]
 
     })
-    const [isAddMeal, setIsAddMeal] = useState({
-        open: false,
-        num: 0
-    })
+    const [isAddMeal, setIsAddMeal] = useState(false)
     //API Call 
     useEffect(() => {
         Axios.get(`http://magfooddiary-env.eba-bh6g2nuu.us-east-2.elasticbeanstalk.com/summary/${daily.user}/${daily.stamp}/`)
         //.then(result => setDaily({ ...daily, data: result.data.meal }))
         .then(result => setDaily({ ...daily, data: result.data.meal}))
         .catch(err => console.log(err))
-    }, [isAddMeal.num])
+    }, [daily.data])
 
     const submitAddMeal = (e) => {
         e.preventDefault();
@@ -39,14 +36,14 @@ const AllMeals = (props) => {
             }
         ]
         })
-        .then(setIsAddMeal({ open: false, num: isAddMeal.num = isAddMeal.num + 1 }))
+        .then(setIsAddMeal(false ))
         .catch(err => console.log(err))
     }
 
     return (
         <div>
-            <Button onClick={() => setIsAddMeal({ ...isAddMeal, open: !isAddMeal.open })}>Add Meal</Button>
-                {(!isAddMeal.open) 
+            <Button onClick={() => setIsAddMeal(!isAddMeal)}>Add Meal</Button>
+                {(!isAddMeal) 
                 ? null 
                 :<div>
                     <Typography>Meal Name:</Typography>
