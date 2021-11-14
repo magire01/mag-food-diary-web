@@ -1,0 +1,26 @@
+{
+    "data":
+    [
+        {
+            "date": "11/13/2021",
+            "meal": [
+                {
+                "foodName": "Test",
+                "calories": "222",
+                "comments": "test",
+                "mealName": "Breakfast"
+                },
+                {
+                "foodName": "test",
+                "calories": "222",
+                "comments": "testpost",
+                "mealName": "Breakfast"
+                }
+            ],
+            "_id": "magire0113112021",
+            "user": "magire01",
+            "day": "Saturday",
+            "stamp": "13112021"
+            }
+    ]
+}

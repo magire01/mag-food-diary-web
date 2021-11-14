@@ -28,8 +28,8 @@ function App() {
     return "";
   }
   const checkCookie = () => {
-    let username = getCookie("token");
-    if (username != "") {
+    let token = getCookie("token");
+    if (token !== "") {
       setAuth(true);
     } else {
       setAuth(false);
@@ -60,6 +60,7 @@ function App() {
     .then(response => {
       createCookieInHour('token', response.data, 1)
       checkCookie()
+      window.sessionStorage.setItem("user", loginInfo.user);
     })
     .catch(err => console.log(err))
   }
