@@ -23,10 +23,10 @@ const AllMeals = (props) => {
     })
     //API Call 
     useEffect(() => {
-        Axios.get(`http://magfooddiary-env.eba-bh6g2nuu.us-east-2.elasticbeanstalk.com/summary/${daily.user}/${daily.stamp}/`)
-        .then(result => setDaily({ ...daily, data: result.data.meal}))
-        .catch(err => console.log(err))
-    }, [daily.data])
+        Axios.get(`http://magfooddiary-env.eba-bh6g2nuu.us-east-2.elasticbeanstalk.com/summary/${daily.user}/${props.stamp}/`)
+        .then(result => setDaily({ ...daily, stamp: props.stamp, data: result.data.meal}))
+        .catch(err => console.log("not found"))
+    }, [daily])
 
     const handleMealName = (meal) => {
         setMealData({ ...mealData, mealName: meal })
@@ -57,11 +57,14 @@ const AllMeals = (props) => {
                     <Button 
                         onClick={() => handleMealName("Breakfast")} 
                         style={(mealData.mealName == "Breakfast") ? { backgroundColor: "yellow" } : { backgroundColor: "white" }}>Breakfast</Button>
-                    <Button onClick={() => handleMealName("Lunch")}
+                    <Button 
+                        onClick={() => handleMealName("Lunch")}
                         style={(mealData.mealName == "Lunch") ? { backgroundColor: "yellow" } : { backgroundColor: "white" }}>Lunch</Button>
-                    <Button onClick={() => handleMealName("Dinner")}
+                    <Button 
+                        onClick={() => handleMealName("Dinner")}
                         style={(mealData.mealName == "Dinner") ? { backgroundColor: "yellow" } : { backgroundColor: "white" }}>Dinner</Button>
-                    <Button onClick={() => handleMealName("Snack")}
+                    <Button 
+                        onClick={() => handleMealName("Snack")}
                         style={(mealData.mealName == "Snack") ? { backgroundColor: "yellow" } : { backgroundColor: "white" }}>Snack</Button>
                     <Typography>Food Name:</Typography>
                     <input onChange={handleFoodName}/>
