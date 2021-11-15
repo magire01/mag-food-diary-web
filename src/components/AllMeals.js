@@ -8,10 +8,9 @@ const AllMeals = (props) => {
     const [daily, setDaily] = useState({
         user: props.user,
         stamp: props.stamp,
-        data: [{
-            foodName: "loading",
-            calories: "loading"
-        }]
+        day: props.day,
+        date: props.date,
+        data: []
     })
     const [isAddMeal, setIsAddMeal] = useState(false)
 
@@ -21,11 +20,12 @@ const AllMeals = (props) => {
         calories: "",
         comments: "test"
     })
+
     //API Call 
     useEffect(() => {
         Axios.get(`http://magfooddiary-env.eba-bh6g2nuu.us-east-2.elasticbeanstalk.com/summary/${daily.user}/${props.stamp}/`)
-        .then(result => setDaily({ ...daily, stamp: props.stamp, data: result.data.meal}))
-        .catch(err => console.log("not found"))
+        .then(result => setDaily({ ...daily, stamp: props.stamp, day: props.day, date: props.date, data: result.data.meal}))
+        .catch(err => setDaily({ ...daily, data: null}))
     }, [daily])
 
     const handleMealName = (meal) => {
@@ -48,37 +48,79 @@ const AllMeals = (props) => {
         .catch(err => console.log(err))
     }
 
+
+    const submitStartDay = (e) => {
+        e.preventDefault();
+        Axios.post(`http://magfooddiary-env.eba-bh6g2nuu.us-east-2.elasticbeanstalk.com/create/item/`, 
+        {
+            _id: daily.user + daily.stamp,
+            user: daily.user,
+            stamp: daily.stamp,
+            day: daily.day,
+            date: daily.date,
+            meal: mealData
+        })
+        .then(result => console.log("Successfully starte day"))
+        .catch(err => console.log(err))
+    }
+
+
     return (
         <div>
-            <Button onClick={() => setIsAddMeal(!isAddMeal)}>Add Meal</Button>
-                {(!isAddMeal) 
-                ? null 
-                :<div>
-                    <Button 
-                        onClick={() => handleMealName("Breakfast")} 
-                        style={(mealData.mealName == "Breakfast") ? { backgroundColor: "yellow" } : { backgroundColor: "white" }}>Breakfast</Button>
-                    <Button 
-                        onClick={() => handleMealName("Lunch")}
-                        style={(mealData.mealName == "Lunch") ? { backgroundColor: "yellow" } : { backgroundColor: "white" }}>Lunch</Button>
-                    <Button 
-                        onClick={() => handleMealName("Dinner")}
-                        style={(mealData.mealName == "Dinner") ? { backgroundColor: "yellow" } : { backgroundColor: "white" }}>Dinner</Button>
-                    <Button 
-                        onClick={() => handleMealName("Snack")}
-                        style={(mealData.mealName == "Snack") ? { backgroundColor: "yellow" } : { backgroundColor: "white" }}>Snack</Button>
-                    <Typography>Food Name:</Typography>
-                    <input onChange={handleFoodName}/>
-                    <Typography>Calories</Typography>
-                    <input onChange={handleCalories}/>
-                    <Button onClick={(e) => submitAddMeal(e)}>Submit</Button>
-                </div>}
-            {daily.data.map(result => (
-                <div>
-                    <Typography>{result.foodName}</Typography>
-                    <Typography>{result.calories}</Typography>
-                </div>
-            ))}
-        </div>
+
+            {(daily.data == null)
+            ? <div>
+                <Typography>Start Day</Typography>
+                <Button 
+                    onClick={() => handleMealName("Breakfast")} 
+                    style={(mealData.mealName == "Breakfast") ? { backgroundColor: "yellow" } : { backgroundColor: "white" }}>Breakfast</Button>
+                <Button 
+                    onClick={() => handleMealName("Lunch")}
+                    style={(mealData.mealName == "Lunch") ? { backgroundColor: "yellow" } : { backgroundColor: "white" }}>Lunch</Button>
+                <Button 
+                    onClick={() => handleMealName("Dinner")}
+                    style={(mealData.mealName == "Dinner") ? { backgroundColor: "yellow" } : { backgroundColor: "white" }}>Dinner</Button>
+                <Button 
+                    onClick={() => handleMealName("Snack")}
+                    style={(mealData.mealName == "Snack") ? { backgroundColor: "yellow" } : { backgroundColor: "white" }}>Snack</Button>
+                <Typography>Food Name:</Typography>
+                <input onChange={handleFoodName}/>
+                <Typography>Calories</Typography>
+                <input onChange={handleCalories}/>
+                <Button onClick={(e) => submitStartDay(e)}>Submit</Button>
+            </div>
+            : <div>
+                <Button onClick={() => setIsAddMeal(!isAddMeal)}>Add Meal</Button>
+                    {(!isAddMeal) 
+                    ? null 
+                    :<div>
+                        <Button 
+                            onClick={() => handleMealName("Breakfast")} 
+                            style={(mealData.mealName == "Breakfast") ? { backgroundColor: "yellow" } : { backgroundColor: "white" }}>Breakfast</Button>
+                        <Button 
+                            onClick={() => handleMealName("Lunch")}
+                            style={(mealData.mealName == "Lunch") ? { backgroundColor: "yellow" } : { backgroundColor: "white" }}>Lunch</Button>
+                        <Button 
+                            onClick={() => handleMealName("Dinner")}
+                            style={(mealData.mealName == "Dinner") ? { backgroundColor: "yellow" } : { backgroundColor: "white" }}>Dinner</Button>
+                        <Button 
+                            onClick={() => handleMealName("Snack")}
+                            style={(mealData.mealName == "Snack") ? { backgroundColor: "yellow" } : { backgroundColor: "white" }}>Snack</Button>
+                        <Typography>Food Name:</Typography>
+                        <input onChange={handleFoodName}/>
+                        <Typography>Calories</Typography>
+                        <input onChange={handleCalories}/>
+                        <Button onClick={(e) => submitAddMeal(e)}>Submit</Button>
+                    </div>}
+            
+                {daily.data.map(result => (
+                    <div>
+                        <Typography>{result.foodName}</Typography>
+                        <Typography>{result.calories}</Typography>
+                    </div>
+                ))}
+            </div>}
+        </div>    
     )
 }
 export default AllMeals;

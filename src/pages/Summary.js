@@ -40,7 +40,7 @@ const Summary = () => {
                     <Button onClick={() => setDaily({ ...daily, stamp: dayButton.stamp[index], date: dayButton.l[index], day: result })}>{result}</Button>
                 ))}
                 <Typography variant="h4">{daily.day} {daily.date}</Typography>
-                <AllMeals user={daily.user} stamp={daily.stamp}/>
+                <AllMeals user={daily.user} stamp={daily.stamp} day={daily.day} date={daily.date}/>
             </Grid>}
         </Grid>
     )
