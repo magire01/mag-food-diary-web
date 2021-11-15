@@ -1,26 +1,60 @@
 {
     "data":
-    [
-        {
-            "date": "11/13/2021",
-            "meal": [
-                {
-                "foodName": "Test",
-                "calories": "222",
-                "comments": "test",
-                "mealName": "Breakfast"
-                },
-                {
-                "foodName": "test",
-                "calories": "222",
-                "comments": "testpost",
-                "mealName": "Breakfast"
-                }
-            ],
-            "_id": "magire0113112021",
-            "user": "magire01",
-            "day": "Saturday",
-            "stamp": "13112021"
+    {
+        "date": "11/13/2021",
+        "meal": [
+            {
+            "foodName": "Sausage",
+            "calories": "200",
+            "comments": "test",
+            "mealName": "Breakfast"
+            },
+            {
+            "foodName": "Eggs",
+            "calories": "100",
+            "comments": "test",
+            "mealName": "Breakfast"
+            },
+            {
+            "foodName": "Yogurt",
+            "calories": "100",
+            "comments": "testpost",
+            "mealName": "Lunch"
+            },
+            {
+            "foodName": "Chicken",
+            "calories": "200",
+            "comments": "test",
+            "mealName": "Dinner"
+            },
+            {
+            "foodName": "Fries",
+            "calories": "400",
+            "comments": "test",
+            "mealName": "Dinner"
+            },
+            {
+            "foodName": "Apple",
+            "calories": "50",
+            "comments": "test",
+            "mealName": "Snack"
+            },
+            {
+            "foodName": "Fries",
+            "calories": "400",
+            "comments": "test",
+            "mealName": "Dinner"
+            },
+            {
+            "foodName": "Apple",
+            "calories": "50",
+            "comments": "test",
+            "mealName": "Snack"
             }
-    ]
+        ],
+        "_id": "magire0113112021",
+        "user": "magire01",
+        "day": "Saturday",
+        "stamp": "13112021"
+    }
 }

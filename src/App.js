@@ -41,11 +41,11 @@ function App() {
     password: ""
   })
 
-  const [auth, setAuth] = useState(false)
+  const [auth, setAuth] = useState(true)
 
-  useEffect(() => {
-    checkCookie()
-  }, [auth])
+  // useEffect(() => {
+  //   checkCookie()
+  // }, [auth])
 
   const handleUser = (e) => {
     setLoginInfo({ ...loginInfo, user: e.target.value})

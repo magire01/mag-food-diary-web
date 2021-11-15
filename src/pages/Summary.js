@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import Axios from "axios";
 import { Grid, Typography, Button } from "@mui/material";
 
+import DayAPI from "../utilities/day.json";
+
 import AllMeals from '../components/AllMeals';
 import AddMeal from '../components/AddMeal';
 
@@ -21,14 +23,20 @@ const Summary = () => {
         l: [],
         stamp: []
     })
+    // useEffect(() => {
+    //     setDaily({ ...daily, user: window.sessionStorage.getItem("user")})
+    //     Axios.get("http://magfooddiary-env.eba-bh6g2nuu.us-east-2.elasticbeanstalk.com/day")
+    //     .then(result => {
+    //         setDaily({ ...daily, stamp: result.data.stamp, day: result.data.day, date: result.data.date })
+    //         setDayButton(result.data.week)
+    //     })
+    //     .catch(err => console.log(err))
+    // }, [])
+
     useEffect(() => {
         setDaily({ ...daily, user: window.sessionStorage.getItem("user")})
-        Axios.get("http://magfooddiary-env.eba-bh6g2nuu.us-east-2.elasticbeanstalk.com/day")
-        .then(result => {
-            setDaily({ ...daily, stamp: result.data.stamp, day: result.data.day, date: result.data.date })
-            setDayButton(result.data.week)
-        })
-        .catch(err => console.log(err))
+            setDaily({ ...daily, stamp: DayAPI.data.stamp, day: DayAPI.data.day, date: DayAPI.data.date })
+            setDayButton(DayAPI.data.week)
     }, [])
 
     return(
