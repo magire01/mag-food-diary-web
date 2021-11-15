@@ -79,7 +79,6 @@ function App() {
       fontSize: 40,
       width: "100%",
       padding: "50px 0px 50px 0px",
-      //margin: "50px 0px 50px 0px",
       fontWeight: "bold"
     },
     loginFont: {
@@ -101,6 +100,12 @@ function App() {
     loginField: {
       margin: "50px 0px 50px 0px",
       padding: "10px"
+    },
+    logoutButton: {
+      color: "orange",
+      border: "1px solid orange",
+      marginTop: 5,
+      fontSize: 10
     }
   }
   if (!auth)
@@ -137,7 +142,9 @@ function App() {
   );
   return (
     <div className="App">
-      <Button onClick={logout}>Logout</Button>
+      <Button 
+      onClick={logout}
+      style={style.logoutButton}>Logout</Button>
       <Summary />
     </div>
   );
