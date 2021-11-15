@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 import Axios from "axios";
-import { Typography, Button } from "@mui/material";
+import { Container, Grid, Typography, Button, Box, TextField } from "@mui/material";
 
 import Summary from './pages/Summary';
 
@@ -72,16 +72,67 @@ function App() {
   
   }
 
+  const style = {
+    banner: {
+      backgroundColor: "orange",
+      color: "white",
+      fontSize: 40,
+      width: "100%",
+      padding: "50px 0px 50px 0px",
+      //margin: "50px 0px 50px 0px",
+      fontWeight: "bold"
+    },
+    loginFont: {
+      color: "orange",
+      fontSize: 20
+    },
+    loginInput: {
+      margin: "10px 0px 10px 0px",
+      width: 200
+    },
+    loginButton: {
+      color: "white",
+      backgroundColor: "orange",
+      margin: "30px 0px 30px 0px",
+      width: 200,
+      height: 50,
+      fontSize: 20
+    },
+    loginField: {
+      margin: "50px 0px 50px 0px",
+      padding: "10px"
+    }
+  }
   if (!auth)
   return (
     <div className="App">
-      <h1>Food Diary</h1>
-      <Typography>Login</Typography>
-      <p>Username</p>
-      <input onChange={handleUser} />
-      <p>Password</p>
-      <input onChange={handlePassword}/>
-      <Button onClick={sendLogin}>Login</Button>
+      <Grid container direction="row" alignItems="center" justifyContent="center">
+        <Typography style={style.banner}>Food Diary</Typography>
+      </Grid>
+      <Grid container direction="row" alignItems="center" justifyContent="center">
+        <Box style={style.loginField}>
+          <Grid item xs="12">
+            <TextField 
+            id="outlined-required"
+            label="Username"
+            style={style.loginInput}
+            onChange={handleUser} />
+          </Grid>
+          <Grid item xs="12">
+            <TextField 
+            id="outlined-password-input"
+            label="Password"
+            type="password"
+            style={style.loginInput}
+            onChange={handlePassword}/>
+          </Grid>
+          <Grid item xs="12">
+            <Button 
+            onClick={sendLogin}
+            style={style.loginButton}>Login</Button>
+          </Grid>
+        </Box>
+      </Grid>
     </div>
   );
   return (
