@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Axios from "axios";
 import FoodAPI from "../utilities/food.json"
-import { Typography, Button } from "@mui/material";
+import { Grid, Typography, Button } from "@mui/material";
 
 const AllMeals = (props) => {
 
@@ -69,7 +69,7 @@ const AllMeals = (props) => {
         <div>
 
             {(daily.data == null)
-            ? <div>
+            ? <>
                 <Typography>Start Day</Typography>
                 <Button 
                     onClick={() => handleMealName("Breakfast")} 
@@ -83,17 +83,23 @@ const AllMeals = (props) => {
                 <Button 
                     onClick={() => handleMealName("Snack")}
                     style={(mealData.mealName == "Snack") ? { backgroundColor: "yellow" } : { backgroundColor: "white" }}>Snack</Button>
-                <Typography>Food Name:</Typography>
-                <input onChange={handleFoodName}/>
-                <Typography>Calories</Typography>
-                <input onChange={handleCalories}/>
-                <Button onClick={(e) => submitStartDay(e)}>Submit</Button>
-            </div>
-            : <div>
+                <Grid item xs="12">
+                    <Typography>Food Name:</Typography>
+                    <input onChange={handleFoodName}/>
+                </Grid>
+                <Grid item xs="12">
+                    <Typography>Calories</Typography>
+                    <input onChange={handleCalories}/>
+                </Grid>
+                <Grid item xs="12">
+                    <Button onClick={(e) => submitStartDay(e)}>Submit</Button>
+                </Grid>
+            </>
+            : <>
                 <Button onClick={() => setIsAddMeal(!isAddMeal)}>Add Meal</Button>
                     {(!isAddMeal) 
                     ? null 
-                    :<div>
+                    :<>
                         <Button 
                             onClick={() => handleMealName("Breakfast")} 
                             style={(mealData.mealName == "Breakfast") ? { backgroundColor: "yellow" } : { backgroundColor: "white" }}>Breakfast</Button>
@@ -106,12 +112,18 @@ const AllMeals = (props) => {
                         <Button 
                             onClick={() => handleMealName("Snack")}
                             style={(mealData.mealName == "Snack") ? { backgroundColor: "yellow" } : { backgroundColor: "white" }}>Snack</Button>
-                        <Typography>Food Name:</Typography>
-                        <input onChange={handleFoodName}/>
-                        <Typography>Calories</Typography>
-                        <input onChange={handleCalories}/>
-                        <Button onClick={(e) => submitAddMeal(e)}>Submit</Button>
-                    </div>}
+                        <Grid item xs="12">
+                            <Typography>Food Name:</Typography>
+                            <input onChange={handleFoodName}/>
+                        </Grid>
+                        <Grid item xs="12">
+                            <Typography>Calories</Typography>
+                            <input onChange={handleCalories}/>
+                        </Grid>
+                        <Grid item xs="12">
+                            <Button onClick={(e) => submitAddMeal(e)}>Submit</Button>
+                        </Grid>
+                    </>}
             
                 {daily.data.map(result => (
                     <div>
@@ -119,7 +131,7 @@ const AllMeals = (props) => {
                         <Typography>{result.calories}</Typography>
                     </div>
                 ))}
-            </div>}
+            </>}
         </div>    
     )
 }
