@@ -23,6 +23,10 @@ const Summary = () => {
         l: [],
         stamp: []
     })
+
+    const [dayIndex, setDayIndex] = useState(3)
+
+
     // useEffect(() => {
     //     setDaily({ ...daily, user: window.sessionStorage.getItem("user")})
     //     Axios.get("http://magfooddiary-env.eba-bh6g2nuu.us-east-2.elasticbeanstalk.com/day")
@@ -35,21 +39,28 @@ const Summary = () => {
 
     useEffect(() => {
         setDaily({ ...daily, user: window.sessionStorage.getItem("user")})
-            setDaily({ ...daily, stamp: DayAPI.data.stamp, day: DayAPI.data.day, date: DayAPI.data.date })
+            setDaily({ ...daily, stamp: DayAPI.data.week.stamp[dayIndex], day: DayAPI.data.week.dddd[dayIndex], date: DayAPI.data.week.l[dayIndex] })
             setDayButton(DayAPI.data.week)
-    }, [])
+    }, [dayIndex])
 
     return(
-        <Grid container direction="row" alignItems="center" justifyContent="center">
+        <Grid container direction="row" alignItems="center" justifyContent="center" style={{marginTop: 20}}>
             {(daily.stamp === null) 
             ? <div> Searching For Results </div> 
-            : <Grid item>
-                {dayButton.dddd.map((result, index) => (
-                    <Button onClick={() => setDaily({ ...daily, stamp: dayButton.stamp[index], date: dayButton.l[index], day: result })}>{result}</Button>
-                ))}
-                <Typography variant="h5">{daily.day} {daily.date}</Typography>
-                <AllMeals user={daily.user} stamp={daily.stamp} day={daily.day} date={daily.date}/>
-            </Grid>}
+            : <>
+                <Grid item xs="2">
+                    <Button onClick={() => setDayIndex(dayIndex - 1)}>-</Button>
+                </Grid>
+                <Grid item xs="8">
+                    <Typography variant="h5">{daily.day} {daily.date}</Typography>
+                </Grid>
+                <Grid item xs="2">
+                    <Button onClick={() => setDayIndex(dayIndex + 1)}>+</Button>
+                </Grid>
+                <Grid item xs="12">
+                    <AllMeals user={daily.user} stamp={daily.stamp} day={daily.day} date={daily.date}/>
+                </Grid>
+            </>}
         </Grid>
     )
 }
