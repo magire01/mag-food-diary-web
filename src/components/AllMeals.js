@@ -14,24 +14,29 @@ const AllMeals = (props) => {
     })
     const [isAddMeal, setIsAddMeal] = useState(false)
 
+
     const [mealData, setMealData] = useState({
         mealName: "Breakfast",
         foodName: "",
         calories: "",
         comments: "test"
     })
-
-    //API Call 
-    // useEffect(() => {
-    //     Axios.get(`http://magfooddiary-env.eba-bh6g2nuu.us-east-2.elasticbeanstalk.com/summary/${daily.user}/${props.stamp}/`)
-    //     .then(result => setDaily({ ...daily, stamp: props.stamp, day: props.day, date: props.date, data: result.data.meal}))
-    //     .catch(err => setDaily({ ...daily, data: null}))
-    // }, [daily])
-
+    const getData = () => {
+        Axios.get(`http://magfooddiary-env.eba-bh6g2nuu.us-east-2.elasticbeanstalk.com/summary/${daily.user}/${props.stamp}/`)
+        .then(result => setDaily({ ...daily, stamp: props.stamp, day: props.day, date: props.date, data: result.data.meal}))
+        .catch(err => setDaily({ ...daily, data: null}))
+    }
+    //REAL API Call 
     useEffect(() => {
-        setDaily({ ...daily, stamp: props.stamp, day: props.day, date: props.date, data: FoodAPI.data.meal})
-        //setDaily({ ...daily, stamp: props.stamp, day: props.day, date: props.date, data: null})
-    }, [daily])
+        getData()
+    }, [props.stamp])
+
+    //MOCK DATA
+    // useEffect(() => {
+    //     setDaily({ ...daily, stamp: props.stamp, day: props.day, date: props.date, data: FoodAPI.data.meal})
+    //     console.log("API FOOD TEST")
+    //     //setDaily({ ...daily, stamp: props.stamp, day: props.day, date: props.date, data: null})
+    // }, [daily.stamp, isAddMeal])
 
     const handleMealName = (meal) => {
         setMealData({ ...mealData, mealName: meal })
@@ -43,20 +48,25 @@ const AllMeals = (props) => {
         setMealData({ ...mealData, calories: e.target.value })
     }
 
+    const handleSubmitMeal = () => {
+        submitAddMeal();
+        getData();
+    }
+    //REAL API CALL
+    const submitAddMeal = () => {
+        Axios.patch(`http://magfooddiary-env.eba-bh6g2nuu.us-east-2.elasticbeanstalk.com/add/${daily.user}/${daily.stamp}/`,
+        {
+            meal: [mealData]
+        })
+        .then(setIsAddMeal(false))
+        .then(getData())
+        .catch(err => console.log(err))
+    }
+    //MOCK DATA
     // const submitAddMeal = (e) => {
     //     e.preventDefault();
-    //     Axios.patch(`http://magfooddiary-env.eba-bh6g2nuu.us-east-2.elasticbeanstalk.com/add/${daily.user}/${daily.stamp}/`,
-    //     {
-    //         meal: [mealData]
-    //     })
-    //     .then(setIsAddMeal(false))
-    //     .catch(err => console.log(err))
+    //     setIsAddMeal(false)
     // }
-
-    const submitAddMeal = (e) => {
-        e.preventDefault();
-        setIsAddMeal(false)
-    }
 
     const submitStartDay = (e) => {
         e.preventDefault();
@@ -92,7 +102,7 @@ const AllMeals = (props) => {
             backgroundColor: "yellow",
             color: "orange",
             position: "fixed", 
-            bottom: "20px", 
+            bottom: "10%", 
             right: "35%"
         }
     }
@@ -218,7 +228,7 @@ const AllMeals = (props) => {
                                 <input onChange={handleCalories}/>
                             </Grid>
                             <Grid item xs="12">
-                                <Button onClick={(e) => submitAddMeal(e)}>Submit</Button>
+                                <Button onClick={handleSubmitMeal}>Submit</Button>
                             </Grid>
                         </Grid>
                     </Paper>

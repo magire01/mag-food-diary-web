@@ -41,7 +41,8 @@ const Summary = () => {
         setDaily({ ...daily, user: window.sessionStorage.getItem("user")})
             setDaily({ ...daily, stamp: DayAPI.data.week.stamp[dayIndex], day: DayAPI.data.week.dddd[dayIndex], date: DayAPI.data.week.l[dayIndex] })
             setDayButton(DayAPI.data.week)
-    }, [dayIndex])
+            console.log("API DAY TEST")
+    }, [dayIndex, daily.user])
 
     return(
         <Grid container direction="row" alignItems="center" justifyContent="center" style={{marginTop: 20}}>

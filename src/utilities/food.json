@@ -50,6 +50,18 @@
             "calories": "50",
             "comments": "test",
             "mealName": "Snack"
+            },
+            {
+            "foodName": "Fries",
+            "calories": "400",
+            "comments": "test",
+            "mealName": "Dinner"
+            },
+            {
+            "foodName": "Apple",
+            "calories": "50",
+            "comments": "test",
+            "mealName": "Snack"
             }
         ],
         "_id": "magire0113112021",
